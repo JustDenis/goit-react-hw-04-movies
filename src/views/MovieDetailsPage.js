@@ -21,7 +21,7 @@ export default class MovieDetailsPage extends Component {
 
   changeLocationPath = location => {
     const {state} = location;
-    
+
     if(state && state.from){
       return this.props.history.push(state.from);
     }

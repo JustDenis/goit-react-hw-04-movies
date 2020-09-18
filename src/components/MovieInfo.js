@@ -234,10 +234,16 @@ export default class MovieInfo extends Component {
             <ReviewsSection>
               <ReviewsNav>
                 <ReviewsNavItem>
-                  <InfoMenu to={`${currentUrl}/reviews`}>Reviews</InfoMenu>
+                  <InfoMenu to={{
+                    pathname: `${currentUrl}/reviews`,
+                    state: {from: this.props.location.state.from}
+                  }}>Reviews</InfoMenu>
                 </ReviewsNavItem>
                 <ReviewsNavItem>
-                  <InfoMenu to={`${currentUrl}/casts`}>Casts</InfoMenu>
+                  <InfoMenu to={{
+                    pathname: `${currentUrl}/casts`,
+                    state: {from: this.props.location.state.from}
+                  }}>Casts</InfoMenu>
                 </ReviewsNavItem>
               </ReviewsNav>
               <Switch>

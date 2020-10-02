@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Casts from '../components/Casts';
@@ -9,6 +9,7 @@ import '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import routes from '../routes';
+import PropTypes from 'prop-types';
 
 const activeClassName = 'info-nav-active';
 
@@ -73,7 +74,7 @@ const InfoSection = styled.section`
   padding-bottom: 30px;
   flex-wrap: wrap;
 
-  @media screen and (max-width: 1025px){
+  @media screen and (max-width: 1025px) {
     padding: 0 10px;
   }
 `;
@@ -119,7 +120,7 @@ const StarIcon = styled(FontAwesomeIcon)`
 
 const MainInfoSection = styled.section`
   width: 40%;
-  @media screen and (max-width: 669px){
+  @media screen and (max-width: 669px) {
     width: 100%;
     margin-bottom: 50px;
   }
@@ -132,7 +133,7 @@ const ReviewsNav = styled.ul`
 
 const ReviewsSection = styled.section`
   width: 50%;
-  @media screen and (max-width: 669px){
+  @media screen and (max-width: 669px) {
     width: 100%;
   }
 `;
@@ -146,7 +147,7 @@ const ReviewsNavItem = styled.li`
   }
 `;
 
-const InfoMenu = styled(NavLink).attrs({activeClassName})`
+const InfoMenu = styled(NavLink).attrs({ activeClassName })`
   padding: 10px;
   font-size: 18px;
   text-decoration: none;
@@ -154,112 +155,134 @@ const InfoMenu = styled(NavLink).attrs({activeClassName})`
   border: 2px solid #000;
   border-radius: 15px;
 
-  &.${activeClassName}{
-    color: #448AFF;
-    border-color: #448AFF;
+  &.${activeClassName} {
+    color: #448aff;
+    border-color: #448aff;
   }
 `;
 
-export default class MovieInfo extends Component {
-  createMovieInfoItems = items =>
-    items.map(item => <li key={uuidv4()}>{item.name}</li>);
-
-  render() {
-    const {
-      title,
-      poster,
-      genres,
-      companies,
-      countries,
-      rate,
-      overview,
-      currentUrl,
-      movieId,
-    } = this.props;
-    return (
-      <section>
-        <PosterBox poster={poster}>
-          <ArrowBack
-            onClick={() => this.props.onChangeLocation(this.props.location)}
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </ArrowBack>
-          <PosterTitle>{title}</PosterTitle>
-        </PosterBox>
-        <Layout>
-          <MainInfoTitle>Movie info:</MainInfoTitle>
-          <InfoSection>
-            <MainInfoSection>
-              <InfoBlock>
-                <InfoTitle>Overview:</InfoTitle>
-                <p>{overview ? overview : `Sorry, overview not found...`}</p>
-              </InfoBlock>
-              <InfoBlock>
-                <InfoTitle>Genres:</InfoTitle>
-                <ItemsList>
-                  {' '}
-                  {genres.length !== 0 ? (
-                    this.createMovieInfoItems(genres)
-                  ) : (
-                    <li>Genres not found.</li>
-                  )}
-                </ItemsList>
-              </InfoBlock>
-              <InfoBlock>
-                <InfoTitle>Companies:</InfoTitle>
-                <ItemsList>
-                  {companies.length !== 0 ? (
-                    this.createMovieInfoItems(companies)
-                  ) : (
-                    <li>Companies not found.</li>
-                  )}
-                </ItemsList>
-              </InfoBlock>
-              <InfoBlock>
-                <InfoTitle>Countries:</InfoTitle>
-                <ItemsList>
-                  {' '}
-                  {countries.length !== 0 ? (
-                    this.createMovieInfoItems(countries)
-                  ) : (
-                    <li>Countries not found.</li>
-                  )}
-                </ItemsList>
-              </InfoBlock>
-              <RatingTitle>Rating:</RatingTitle>
-              <span>
-                <StarIcon icon={faStar} /> {rate}
-              </span>
-            </MainInfoSection>
-            <ReviewsSection>
-              <ReviewsNav>
-                <ReviewsNavItem>
-                  <InfoMenu to={{
-                    pathname: `${currentUrl}/reviews`,
-                    state: {from: this.props.location.state.from}
-                  }}>Reviews</InfoMenu>
-                </ReviewsNavItem>
-                <ReviewsNavItem>
-                  <InfoMenu to={{
-                    pathname: `${currentUrl}/casts`,
-                    state: {from: this.props.location.state.from}
-                  }}>Casts</InfoMenu>
-                </ReviewsNavItem>
-              </ReviewsNav>
-              <Switch>
-                <Route
-                  path={routes.casts}
-                  render={props => <Casts {...props} movieId={movieId} />}
-                />
-                <Route
-                path={routes.reviews}
-                    render={props => <Review {...props} movieId={movieId}/>}
-                />
-              </Switch>
-            </ReviewsSection>
-          </InfoSection>
-        </Layout>
-      </section>
-    );
-  }
+const createMovieInfoItems = items =>{
+  return items.map(item => <li key={uuidv4()}>{item.name}</li>);
 }
+
+function MovieInfo({
+  title,
+  poster,
+  genres,
+  companies,
+  countries,
+  rate,
+  overview,
+  currentUrl,
+  movieId,
+  onChangeLocation,
+  location
+}) {
+  return (
+    <section>
+      <PosterBox poster={poster}>
+        <ArrowBack
+          onClick={() => onChangeLocation(location)}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </ArrowBack>
+        <PosterTitle>{title}</PosterTitle>
+      </PosterBox>
+      <Layout>
+        <MainInfoTitle>Movie info:</MainInfoTitle>
+        <InfoSection>
+          <MainInfoSection>
+            <InfoBlock>
+              <InfoTitle>Overview:</InfoTitle>
+              <p>{overview ? overview : `Sorry, overview not found...`}</p>
+            </InfoBlock>
+            <InfoBlock>
+              <InfoTitle>Genres:</InfoTitle>
+              <ItemsList>
+                {genres.length !== 0 ? (
+                  createMovieInfoItems(genres)
+                ) : (
+                  <li>Genres not found.</li>
+                )}
+              </ItemsList>
+            </InfoBlock>
+            <InfoBlock>
+              <InfoTitle>Companies:</InfoTitle>
+              <ItemsList>
+                {companies.length !== 0 ? (
+                  createMovieInfoItems(companies)
+                ) : (
+                  <li>Companies not found.</li>
+                )}
+              </ItemsList>
+            </InfoBlock>
+            <InfoBlock>
+              <InfoTitle>Countries:</InfoTitle>
+              <ItemsList>
+                {countries.length !== 0 ? (
+                  createMovieInfoItems(countries)
+                ) : (
+                  <li>Countries not found.</li>
+                )}
+              </ItemsList>
+            </InfoBlock>
+            <RatingTitle>Rating:</RatingTitle>
+            <span>
+              <StarIcon icon={faStar} /> {rate}
+            </span>
+          </MainInfoSection>
+          <ReviewsSection>
+            <ReviewsNav>
+              <ReviewsNavItem>
+                <InfoMenu
+                  to={{
+                    pathname: `${currentUrl}/reviews`,
+                    state: { from: location.state.from },
+                  }}
+                >
+                  Reviews
+                </InfoMenu>
+              </ReviewsNavItem>
+              <ReviewsNavItem>
+                <InfoMenu
+                  to={{
+                    pathname: `${currentUrl}/actors`,
+                    state: { from: location.state.from },
+                  }}
+                >
+                  Actors
+                </InfoMenu>
+              </ReviewsNavItem>
+            </ReviewsNav>
+            <Switch>
+              <Route
+                path={routes.actors}
+                render={props => <Casts {...props} movieId={movieId} />}
+              />
+              <Route
+                path={routes.reviews}
+                render={props => <Review {...props} movieId={movieId} />}
+              />
+            </Switch>
+          </ReviewsSection>
+        </InfoSection>
+      </Layout>
+    </section>
+  );
+}
+
+MovieInfo.propTypes = {
+  title: PropTypes.string,
+  poster: PropTypes.string,
+  genres: PropTypes.arrayOf(PropTypes.object),
+  companies: PropTypes.arrayOf(PropTypes.object),
+  countries: PropTypes.arrayOf(PropTypes.object),
+  rate: PropTypes.number,
+  overview: PropTypes.string,
+  location: PropTypes.object,
+  onChangeLocation: PropTypes.func,
+  currentUrl: PropTypes.string,
+  movieId: PropTypes.string,
+}
+
+export default MovieInfo;

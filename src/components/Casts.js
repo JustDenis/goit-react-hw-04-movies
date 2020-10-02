@@ -3,8 +3,13 @@ import CastsList from '../components/CastsList';
 import CastsListItem from '../components/CastsListItem';
 import Loader from '../components/Loader';
 import filmsApi from '../services/filmsApi';
+import PropTypes from 'prop-types';
 
 export default class Casts extends Component {
+  static propTypes = {
+    movieId: PropTypes.string,
+  }
+
   state = {
     actors: null,
   };

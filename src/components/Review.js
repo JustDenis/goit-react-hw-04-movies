@@ -3,8 +3,13 @@ import ReviewList from '../components/ReviewList';
 import ReviewListItem from '../components/ReviewListItem';
 import Loader from '../components/Loader';
 import filmsApi from '../services/filmsApi';
+import PropTypes from 'prop-types';
 
 export default class Review extends Component {
+  static propTypes = {
+    movieId: PropTypes.string,
+  }
+
   state = {
     reviews: null,
   };
@@ -17,7 +22,6 @@ export default class Review extends Component {
 
   render() {
     const { reviews } = this.state;
-    console.log(reviews);
     return (
       <section>
         <ReviewList>

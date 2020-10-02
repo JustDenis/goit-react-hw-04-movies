@@ -4,6 +4,7 @@ import Loader from './Loader';
 import Layout from './Layout';
 import styled from 'styled-components';
 import filmsApi from '../services/filmsApi';
+import PropTypes from 'prop-types';
 
 const FilmList = styled.ul`
   display: flex;
@@ -24,6 +25,10 @@ const SectionTitle = styled.h2`
 `;
 
 export default class TrendFilms extends Component {
+  static proptTypes = {
+    location: PropTypes.object,
+  }
+
   state = {
     films: [],
   };

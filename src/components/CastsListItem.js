@@ -1,6 +1,7 @@
 import React from 'react';
 import NotFoundActorImg from '../assets/NotFoundActor.png';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const List = styled.li`
   width: 40%;
@@ -61,5 +62,11 @@ const CastsListItem = ({ actorImage, actorName, characterName }) => {
     </List>
   );
 };
+
+CastsListItem.propTypes = {
+  actorImage: PropTypes.string,
+  actorName: PropTypes.string,
+  characterName: PropTypes.string,
+}
 
 export default CastsListItem;

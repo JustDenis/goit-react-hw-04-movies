@@ -5,6 +5,7 @@ import '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import NotFoundActorImg from '../assets/NotFoundActor.png';
+import PropTypes from 'prop-types';
 
 const FilmContainer = styled.li`
   max-width: 250px;
@@ -83,5 +84,13 @@ const TrendFilmsItem = ({ title, image, rating, movieId, location }) => {
     </FilmContainer>
   )
 };
+
+TrendFilmsItem.propTypes = {
+  title: PropTypes.string,
+  image: PropTypes.string,
+  rating: PropTypes.number,
+  movieId: PropTypes.number,
+  location: PropTypes.object,
+}
 
 export default TrendFilmsItem;

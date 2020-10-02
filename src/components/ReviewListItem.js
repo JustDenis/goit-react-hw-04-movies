@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const List = styled.li`
     margin-bottom: 20px;
@@ -26,5 +27,10 @@ const ReviewListItem = ({ review, author }) => {
     </List>
   );
 };
+
+ReviewListItem.propTypes = {
+  review: PropTypes.string,
+  author: PropTypes.string,
+}
 
 export default ReviewListItem;

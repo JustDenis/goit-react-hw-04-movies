@@ -178,6 +178,7 @@ function MovieInfo({
   onChangeLocation,
   location
 }) {
+  const isLocationStateEmpty = location.state === undefined? true : false;
   return (
     <section>
       <PosterBox poster={poster}>
@@ -237,7 +238,7 @@ function MovieInfo({
                 <InfoMenu
                   to={{
                     pathname: `${currentUrl}/reviews`,
-                    state: { from: location.state.from },
+                    state: !isLocationStateEmpty? { from: location.state.from } : null,
                   }}
                 >
                   Reviews
@@ -247,7 +248,7 @@ function MovieInfo({
                 <InfoMenu
                   to={{
                     pathname: `${currentUrl}/actors`,
-                    state: { from: location.state.from },
+                    state: !isLocationStateEmpty? { from: location.state.from } : null,
                   }}
                 >
                   Actors
